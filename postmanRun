@@ -1,0 +1,70 @@
+#!/bin/sh
+
+BRANCH="$1"
+ENV="env_temp.json"
+HUMANITY_CLIENT_ID="7e08e3218f32e9a9f48129248940416d4d7e570f"
+HUMANITY_CLIENT_SECRET="9970dffbebb7c0466a793a9e4e84d6e7d142a9de"
+POSTMAN_API_KEY="16fa5cd49585478da3b1bb2fb0fdf23c"
+SANITY_COLLECTION_UID="871415-85d44725-df75-30d3-846e-01157cf89bc0"
+TRADE_UID="2258936-d9850d06-b174-4aea-a6c1-4ad3a0304aff"
+ADMIN_MODULE_UID="2304850-ca090138-f2a2-4e34-b947-62153fc510d0"
+UNIQUE_ID_UID="533290-cf32113a-d891-104e-3a8f-a1004bfa3bce"
+CROSS_STORE_UID="2298695-3645188f-e20e-c2b5-f8e7-5a9a292c651d"
+CROSS_ROLE_STAFF_UID="2304850-aff68006-5e0a-d88e-77de-49f394e6a504"
+FORECAST_UID="2298695-73b59e59-42e4-49dd-a13b-e1e29fa0a252"
+GROUP_TOKEN_UID="533290-465790e8-5068-c393-63d6-f759efbc665d"
+LEAVE_UID="2298695-19c95b95-134c-75d7-6b81-c7e79b162027"
+MESSAGE_PERMISSIONS_UID="533290-7067bc96-4714-d8cb-a1f2-f3f500e249dc"
+PAYROLL_UID="2304850-66443df0-0950-4195-9212-9e4c3e2d4f74"
+SETTINGS_UID="2705422-7fd48886-07b7-6beb-9f76-200a18ff94a5"
+STAFF_UID="2705422-4c09d5f6-4188-641d-9c64-453c347a129d"
+TRAINING_UID="2304850-2017d63f-89f3-4127-aa3d-942027072cde"
+UPLOAD_UID="2298695-1ab140a1-76e9-d65e-2915-e61fe5820808"
+EXPORT_USER_DATA_UID="533290-25b70249-9107-4577-ae69-26526c2200d1"
+TIMECLOCKS_UID="2304850-0f192561-32a1-4bf8-92bb-d1a473eeeb16"
+
+#temp file to be used as environment for postman collection, it'll be deleted at the end of script execution
+if [ "$1" == "stage" ] ; then
+	cp stg.json $ENV
+elif [ "$1" == "live" ] ; then
+	cp live.json $ENV
+else
+	cp env.json $ENV
+fi
+
+
+if [ -n "$1" ] ; then
+
+    sed -i.bk "s/{:BRANCH:}/$BRANCH/g" $ENV
+    sed -i.bk "s/{:CLIENT_ID:}/$HUMANITY_CLIENT_ID/g" $ENV
+    sed -i.bk "s/{:CLIENT_SECRET:}/$HUMANITY_CLIENT_SECRET/g" $ENV
+    
+    newman run https://api.getpostman.com/collections/$SANITY_COLLECTION_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export sanityTests0failed.html &
+    newman run https://api.getpostman.com/collections/$TRADE_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export tradeJSON0failed.html &
+    newman run https://api.getpostman.com/collections/$ADMIN_MODULE_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export adminModule0failed.html &
+    newman run https://api.getpostman.com/collections/$UNIQUE_ID_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export uniqueId0failed.html &
+    newman run https://api.getpostman.com/collections/$CROSS_STORE_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export crossStore2failed.html &
+    newman run https://api.getpostman.com/collections/$CROSS_ROLE_STAFF_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export crossRoleStaff3failed.html &
+    newman run https://api.getpostman.com/collections/$FORECAST_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export forecast1failed.html &
+    newman run https://api.getpostman.com/collections/$GROUP_TOKEN_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export groupToken9failed.html &
+    newman run https://api.getpostman.com/collections/$LEAVE_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export leave5failed.html &
+    newman run https://api.getpostman.com/collections/$MESSAGE_PERMISSIONS_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export messagePermissions0failed.html &
+    newman run https://api.getpostman.com/collections/$PAYROLL_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export payroll0failed.html &
+    newman run https://api.getpostman.com/collections/$SETTINGS_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export settings0failed.html &
+    newman run https://api.getpostman.com/collections/$STAFF_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export staff50failed.html &
+    newman run https://api.getpostman.com/collections/$TRAINING_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export training0failed.html &
+    newman run https://api.getpostman.com/collections/$UPLOAD_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export upload0failed.html &
+    newman run https://api.getpostman.com/collections/$EXPORT_USER_DATA_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli, html --reporter-html-export exportUserData0failed.html &
+    newman run https://api.getpostman.com/collections/$TIMECLOCKS_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export timeclocks39failed.html &
+    wait
+    
+    # if [[ $1 == *"master"* ]] || [[ $1 == *"release"* ]]; then
+    #     newman run https://api.getpostman.com/collections/$GROUP_TOKEN_UID?apikey=$POSTMAN_API_KEY --environment $ENV
+    #     newman run https://api.getpostman.com/collections/$CROSS_STORE_UID?apikey=$POSTMAN_API_KEY --environment $ENV
+    # fi
+    
+else
+    echo "Missing branch as script argument"
+    
+fi
+rm -f $ENV
