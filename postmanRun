@@ -32,6 +32,7 @@ elif [ "$1" == "live" ] ; then
 	cp live.json $ENV
 else
 	echo "develop"
+	pwd
 	cp env.json $ENV
 fi
 
