@@ -33,7 +33,7 @@ elif [ "$1" == "live" ] ; then
 else
 	echo "develop"
 	pwd
-	cp env.json $ENV
+	cp $WORKSPACE/repo/skriptarenje/env.json $ENV
 fi
 
 
