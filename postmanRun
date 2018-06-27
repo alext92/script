@@ -1,7 +1,8 @@
 #!/bin/sh
 
 BRANCH="$1"
-ENV="env_temp.json"
+# ENV="env_temp.json"
+ENV = ""
 HUMANITY_CLIENT_ID="7e08e3218f32e9a9f48129248940416d4d7e570f"
 HUMANITY_CLIENT_SECRET="9970dffbebb7c0466a793a9e4e84d6e7d142a9de"
 POSTMAN_API_KEY="16fa5cd49585478da3b1bb2fb0fdf23c"
@@ -25,11 +26,11 @@ TIMECLOCKS_UID="2304850-0f192561-32a1-4bf8-92bb-d1a473eeeb16"
 
 #temp file to be used as environment for postman collection, it'll be deleted at the end of script execution
 if [ "$1" == "stage" ] ; then
-	cp stg.json $ENV
+	ENV = "stg.json"
 elif [ "$1" == "live" ] ; then
-	cp live.json $ENV
+	ENV = "live.json
 else
-	cp env.json $ENV
+	ENV = "env.json"
 fi
 
 
