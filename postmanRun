@@ -42,7 +42,7 @@ if [ -n "$1" ] ; then
     sed -i.bk "s/{:CLIENT_ID:}/$HUMANITY_CLIENT_ID/g" $ENV
     sed -i.bk "s/{:CLIENT_SECRET:}/$HUMANITY_CLIENT_SECRET/g" $ENV
     
-    newman run https://api.getpostman.com/collections/$SANITY_COLLECTION_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export sanityTests0failed.html &
+#     newman run https://api.getpostman.com/collections/$SANITY_COLLECTION_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export sanityTests0failed.html &
 #     newman run https://api.getpostman.com/collections/$TRADE_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export tradeJSON0failed.html &
 #     newman run https://api.getpostman.com/collections/$ADMIN_MODULE_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export adminModule0failed.html &
 #     newman run https://api.getpostman.com/collections/$UNIQUE_ID_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export uniqueId0failed.html &
@@ -54,17 +54,14 @@ if [ -n "$1" ] ; then
 #     newman run https://api.getpostman.com/collections/$MESSAGE_PERMISSIONS_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export messagePermissions0failed.html &
 #     newman run https://api.getpostman.com/collections/$PAYROLL_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export payroll0failed.html &
 #     newman run https://api.getpostman.com/collections/$SETTINGS_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export settings0failed.html &
-#     newman run https://api.getpostman.com/collections/$STAFF_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export staff50failed.html &
+    newman run https://api.getpostman.com/collections/$STAFF_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export staff50failed.html &
 #     newman run https://api.getpostman.com/collections/$TRAINING_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export training0failed.html &
 #     newman run https://api.getpostman.com/collections/$UPLOAD_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export upload0failed.html &
 #     newman run https://api.getpostman.com/collections/$EXPORT_USER_DATA_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli, html --reporter-html-export exportUserData0failed.html &
 #     newman run https://api.getpostman.com/collections/$TIMECLOCKS_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export timeclocks39failed.html &
     wait
     
-    # if [[ $1 == *"master"* ]] || [[ $1 == *"release"* ]]; then
-    #     newman run https://api.getpostman.com/collections/$GROUP_TOKEN_UID?apikey=$POSTMAN_API_KEY --environment $ENV
-    #     newman run https://api.getpostman.com/collections/$CROSS_STORE_UID?apikey=$POSTMAN_API_KEY --environment $ENV
-    # fi
+   
     
 else
     echo "Missing branch as script argument"
