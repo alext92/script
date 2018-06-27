@@ -25,10 +25,13 @@ TIMECLOCKS_UID="2304850-0f192561-32a1-4bf8-92bb-d1a473eeeb16"
 
 #temp file to be used as environment for postman collection, it'll be deleted at the end of script execution
 if [ "$1" == "stage" ] ; then
+	echo "stage"
 	cp stg.json $ENV
 elif [ "$1" == "live" ] ; then
+	echo "live"
 	cp live.json $ENV
 else
+	echo "develop"
 	cp env.json $ENV
 fi
 
