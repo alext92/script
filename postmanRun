@@ -1,8 +1,7 @@
 #!/bin/sh
 
 BRANCH="$1"
-# ENV="env_temp.json"
-ENV = "stg.json"
+ENV="env_temp.json"
 HUMANITY_CLIENT_ID="7e08e3218f32e9a9f48129248940416d4d7e570f"
 HUMANITY_CLIENT_SECRET="9970dffbebb7c0466a793a9e4e84d6e7d142a9de"
 POSTMAN_API_KEY="16fa5cd49585478da3b1bb2fb0fdf23c"
@@ -25,22 +24,22 @@ EXPORT_USER_DATA_UID="533290-25b70249-9107-4577-ae69-26526c2200d1"
 TIMECLOCKS_UID="2304850-0f192561-32a1-4bf8-92bb-d1a473eeeb16"
 
 #temp file to be used as environment for postman collection, it'll be deleted at the end of script execution
-# if [ "$1" == "stage" ] ; then
-# 	ENV = "stg.json"
-# elif [ "$1" == "live" ] ; then
-# 	ENV = "live.json
-# else
-# 	ENV = "env.json"
-# fi
+if [ "$1" == "stage" ] ; then
+	cp stg.json $ENV
+elif [ "$1" == "live" ] ; then
+	cp live.json $ENV
+else
+	cp env.json $ENV
+fi
 
 
-# if [ -n "$1" ] ; then
+if [ -n "$1" ] ; then
 
     sed -i.bk "s/{:BRANCH:}/$BRANCH/g" $ENV
     sed -i.bk "s/{:CLIENT_ID:}/$HUMANITY_CLIENT_ID/g" $ENV
     sed -i.bk "s/{:CLIENT_SECRET:}/$HUMANITY_CLIENT_SECRET/g" $ENV
     
-    newman run https://api.getpostman.com/collections/$SANITY_COLLECTION_UID?apikey=$POSTMAN_API_KEY --environment $ENV &
+    newman run https://api.getpostman.com/collections/$SANITY_COLLECTION_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export sanityTests0failed.html &
 #     newman run https://api.getpostman.com/collections/$TRADE_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export tradeJSON0failed.html &
 #     newman run https://api.getpostman.com/collections/$ADMIN_MODULE_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export adminModule0failed.html &
 #     newman run https://api.getpostman.com/collections/$UNIQUE_ID_UID?apikey=$POSTMAN_API_KEY --environment $ENV --reporters cli,html --reporter-html-export uniqueId0failed.html &
@@ -64,8 +63,8 @@ TIMECLOCKS_UID="2304850-0f192561-32a1-4bf8-92bb-d1a473eeeb16"
     #     newman run https://api.getpostman.com/collections/$CROSS_STORE_UID?apikey=$POSTMAN_API_KEY --environment $ENV
     # fi
     
-# else
-#     echo "Missing branch as script argument"
+else
+    echo "Missing branch as script argument"
     
-# fi
+fi
 rm -f $ENV
