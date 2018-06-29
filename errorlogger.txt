@@ -1,0 +1,2 @@
+warning /(?i)bug/ 
+error /(?i)^\s+inside /
