@@ -1,2 +1,2 @@
-warning /(?i)bug/
-error /(?i)AssertionError/
+warning /(?i)bug/ 
+error /(?i)^\s+inside /
